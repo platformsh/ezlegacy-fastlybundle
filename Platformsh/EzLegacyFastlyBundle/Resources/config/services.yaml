@@ -1,0 +1,14 @@
+services:
+    platformsh.ez_legacy.fastly.response.listener:
+        class: Platformsh\EzLegacyFastlyBundle\Listener\ResponseListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    platformsh.ez_legacy.fastly.proxy_client:
+        class: Platformsh\EzLegacyFastlyBundle\Core\ProxyClient\Fastly
+        arguments:
+            - ['https://api.fastly.com']
+        calls:
+            - method: setConfigResolver
+              arguments:
+                    - '@ezpublish.config.resolver'
